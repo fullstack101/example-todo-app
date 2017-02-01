@@ -1,11 +1,15 @@
-const renderForm = element => {
-    element.innerHTML = `<input id="new-todo" />
-        <button onclick="(function () {
-            var input = document.getElementById('new-todo');
-            actions.add(input.value);
-            input.value=null;
-            input.focus();
-        }())">Add To-Do</button>`;
+const renderForm = (form, id = 'new-todo') => {
+    form.innerHTML = `<input id="${id}" />
+    <button onclick="actions.add("${id}")">Add To-Do</button>`;
+
+    const submit = () => {
+        const input = document.getElementById(id);
+        const value = input.value;
+        input.value = null;
+        return value;
+    };
+
+    return submit;
 };
 
 module.exports = renderForm;

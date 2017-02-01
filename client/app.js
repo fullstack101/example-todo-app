@@ -9,18 +9,19 @@ const flash = createFlash(document.querySelector('#flash'));
 
 const list = () => todoService.list().then(renderList);
 
-const add = text => todoService.add({ text })
-                            .then(flash('added successfully!'));
+const submitForm = renderForm(document.querySelector('#todo-form'));
+
+const add = inputId => todoService.add({ text: submitForm(inputId) })
+                            .then(flash);
 
 const remove = removeUrl => todoService.remove(removeUrl)
-                            .then(flash('removed successfully!'));
+                            .then(flash);
 
 const mainLoop = () => todoService.pollChanges()
                             .then(renderList)
                             .then(mainLoop);
 
-window.actions = { add, remove };
+window.actions = { remove, add };
 
 list();
 mainLoop();
-renderForm(document.querySelector('#todo-form'));
