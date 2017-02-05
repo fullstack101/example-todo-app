@@ -1,0 +1,12 @@
+version: "3"
+
+services:
+  todo-app:
+    build: .
+    ports:
+      - "6701:6701"
+    volumes:
+      - data:/app
+
+volumes:
+  data:

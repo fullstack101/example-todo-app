@@ -14,6 +14,13 @@ The application is built using travis-ci.
 
 ##Getting Started
 
+###Running with docker
+```bash
+docker-compose up
+
+```
+
+###Running locally
 ```bash
 #install project dependencies
 npm install
