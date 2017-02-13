@@ -1,7 +1,9 @@
+import "webcomponentsjs";
 import todoService from './service';
-import createList from './list';
-import createFlash from './flash';
-import renderForm from './form';
+import registerForm from './form';
+import registerItem from './item';
+import registerList from './list';
+import registerFlash from './flash';
 
 const backOffRetry = callback => {
     let backOff = 100;
@@ -11,25 +13,30 @@ const backOffRetry = callback => {
     };
 };
 
-const renderList = createList(document.querySelector('#todo-list'));
+registerList();
+registerFlash();
 
-const flash = createFlash(document.querySelector('#flash'));
+const list = document.querySelector('todo-list');
 
-const list = () => todoService.list().then(renderList);
+const form = document.querySelector('todo-form');
 
-const add = text => todoService.add({ text })
-                            .then(flash('added successfully!'));
+const flash = document.querySelector('flash-message');
 
-const remove = removeUrl => todoService.remove(removeUrl)
-                            .then(flash('removed successfully!'));
+const renderList = items => list.setAttribute('items', JSON.stringify(items));
 
-const mainLoop = () => todoService.pollChanges()
+const addItem = text => todoService.add({ text })
+                          .then(() => flash.flash('added sucessfully'));
+
+const removeItem = removeUrl => todoService.remove(removeUrl)
+                          .then(() => flash.flash('removed successfully'));
+
+const pollLoop = () => todoService.pollChanges()
                             .then(renderList)
-                            .then(mainLoop)
-                            .catch(backOffRetry(mainLoop));
+                            .then(pollLoop)
+                            .catch(backOffRetry(pollLoop));
 
-window.actions = { add, remove };
+registerForm(addItem);
+registerItem(removeItem);
 
-list();
-renderForm(document.querySelector('#todo-form'));
-mainLoop();
+todoService.list().then(renderList);
+pollLoop();

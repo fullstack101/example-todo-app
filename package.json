@@ -27,6 +27,8 @@
     "escape-html": "^1.0.3",
     "express": "^4.14.0",
     "uuid-v4": "^0.1.0",
-    "whatwg-fetch": "^1.0.0"
+    "webcomponentsjs": "^1.0.2",
+    "whatwg-fetch": "^1.0.0",
+    "x-tag": "^1.5.11"
   }
 }
