@@ -1,8 +1,18 @@
-import createItem from './item';
+import * as skate from 'skatejs';
 
-const createList = element => items =>
-     element.innerHTML = `<table class="todo-list">
-        ${items.map(item => createItem(item)).join('')}
-    </table>`;
+customElements.define('todo-list', class extends skate.Component {
+    static get props() {
+        return {
+            items: {
+                attribute: true,
+                default: []
+            }
+        };
+    }
 
-module.exports = createList;
+    renderCallback() {
+        return skate.h('div', ...(this.items ? JSON.parse(this.items) : [])
+            .map(item =>
+                skate.h('to-do', item)));
+    }
+});

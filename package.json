@@ -24,6 +24,8 @@
     "body-parser": "^1.15.2",
     "escape-html": "^1.0.3",
     "express": "^4.14.0",
+    "skatejs": "^4.6.6",
+    "skatejs-web-components": "^5.1.0",
     "uuid-v4": "^0.1.0",
     "whatwg-fetch": "^1.0.0"
   }

@@ -1,9 +1,23 @@
 import escape from 'escape-html';
+import * as skate from 'skatejs';
 
-const createItem = ({ text, removeUrl }) =>
-    `<tr class="todo-item">
-        <td>${escape(text)}</td>
-        <td><button onclick="actions.remove('${removeUrl}')">delete</button></td>
-    </tr>`;
+customElements.define('to-do', class extends skate.Component {
+    static get props() {
+        return {
+            text: {
+                attribute: true
+            },
+            removeUrl: {
+                attribute: true
+            }
+        };
+    }
 
-module.exports = createItem;
+    renderCallback() {
+        return skate.h('div',
+            skate.h('span', escape(this.text)),
+            skate.h('button', {
+                click: () => window.actions.remove(this.removeUrl)
+            }, 'delete'));
+    }
+});

@@ -1,11 +1,15 @@
-const renderForm = element => {
-    element.innerHTML = `<input id="new-todo" />
-        <button onclick="(function () {
-            var input = document.getElementById('new-todo');
-            actions.add(input.value);
+import * as skate from 'skatejs';
+
+customElements.define('todo-form', class extends skate.Component {
+    renderCallback() {
+        return skate.h('div',
+          skate.h('input'),
+          skate.h('button', { onclick: (e) => {
+            const input = this.shadowRoot.querySelector('input');
+            window.actions.add(input.value);
             input.value=null;
             input.focus();
-        }())">Add To-Do</button>`;
-};
-
-module.exports = renderForm;
+         } }, 'Add To-Do')
+        );
+    }
+});

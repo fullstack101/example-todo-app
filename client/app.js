@@ -1,26 +1,31 @@
+import 'skatejs-web-components';
+
 import todoService from './service';
-import createList from './list';
-import createFlash from './flash';
-import renderForm from './form';
 
-const renderList = createList(document.querySelector('#todo-list'));
+import './item';
+import './list';
+import './form';
+import './list';
+import './flash';
 
-const flash = createFlash(document.querySelector('#flash'));
 
-const list = () => todoService.list().then(renderList);
+const list = document.querySelector('todo-list');
+
+const flash = document.querySelector('flash-message');
+
+const updateItems = items => { list.items = items; };
 
 const add = text => todoService.add({ text })
-                            .then(flash('added successfully!'));
+                            .then(() => flash.flash('added successfully!'));
 
 const remove = removeUrl => todoService.remove(removeUrl)
-                            .then(flash('removed successfully!'));
+                            .then(() => flash.flash('removed successfully!'));
 
 const mainLoop = () => todoService.pollChanges()
-                            .then(renderList)
+                            .then(updateItems)
                             .then(mainLoop);
 
 window.actions = { add, remove };
 
-list();
+todoService.list().then(updateItems);
 mainLoop();
-renderForm(document.querySelector('#todo-form'));
