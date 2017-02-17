@@ -17,10 +17,11 @@ const remove = removeUrl => todoService.remove(removeUrl)
 
 const mainLoop = () => todoService.pollChanges()
                             .then(renderList)
-                            .then(mainLoop);
+                            .then(mainLoop)
+                            .catch(mainLoop);
 
 window.actions = { add, remove };
 
 list();
-mainLoop();
 renderForm(document.querySelector('#todo-form'));
+mainLoop();
