@@ -3,10 +3,11 @@
   "version": "1.0.0",
   "description": "",
   "scripts": {
-    "lint": "node ./node_modules/eslint/bin/eslint.js client/*.js server/*.js",
-    "build": "node build.js",
+    "lint": "node ./node_modules/eslint/bin/eslint.js client/*.js server/*.js", 
     "test": "node ./node_modules/mocha/bin/mocha",
-    "dev": "node build && node server/server.js"
+    "build": "node build.js",
+    "start": "node server/server.js",
+    "dev": "npm run build && npm run start"
   },
   "author": "Mihail Mikov",
   "license": "ISC",
