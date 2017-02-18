@@ -17,7 +17,7 @@ const todoService = {
         return fetch(removeUrl, { method: 'POST' }).then(data => data.json());
     },
     pollChanges() {
-        return fetch('/poll?', {
+        return fetch(`/poll?id=${uuid()}`, {
           headers: new Headers({
             'pragma': 'no-cache',
             'cache-control': 'no-cache'

@@ -1,20 +1,21 @@
 'use strict';
 
-const polling = new Set();
+const polling = new Map();
 
 module.exports = {
-    subscribe(callback) {
-        polling.add(callback);
+    subscribe(id, callback) {
+        console.log('added sub', id);
+        polling.set(id, callback);
         return () => {
-          callback.DONE = true;
+          console.log('deleted sub', id); 
+          polling.delete(id);
         };
     },
     publish(message) {
-      polling.forEach(cb => {
-        if (cb.DONE !== true) {
+      polling.forEach((cb, id) => {
           cb(message);
-        }
+          polling.delete(id);
+          console.log('called and deleted sub', id); 
       });
-      polling.clear();
     }
 };

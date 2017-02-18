@@ -12,5 +12,11 @@ module.exports = {
       },
       list() {
           return Array.from(items.values());
+      },
+      listWithActions() {
+          return this.list().map(item => {
+            item.removeUrl = `/remove/${item.id}`;
+            return item;
+          });
       }
 };
