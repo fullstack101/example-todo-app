@@ -1,10 +1,11 @@
 import 'whatwg-fetch';
+import uuid from 'uuid-v4';
 
 const delay = ms => new Promise(y => setTimeout(y, ms));
 
-const todoService = {
+export default {
     list() {
-        return fetch('/list?').then(data => data.json());
+        return fetch('/list').then(data => data.json());
     },
     add(item) {
         return fetch('/add', {
@@ -27,5 +28,3 @@ const todoService = {
           .catch(() => delay(2000));
     }
 };
-
-module.exports = todoService;
