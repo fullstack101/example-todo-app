@@ -1,7 +1,13 @@
 import escape from 'escape-html';
 
-export default ({ text, removeUrl }) =>
-    `<tr class="todo-item">
-        <td>${escape(text)}</td>
-        <td><button onclick="actions.remove('${removeUrl}')">delete</button></td>
-    </tr>`;
+import preact from 'preact';
+const { h, render, Component } = preact;
+
+export default class extends Component {
+    render() {
+        return <tr class="todo-item">
+            <td>{escape(this.props.text)}</td>
+            <td><button onClick={this.props.delete}>delete</button></td>
+        </tr>;
+    }
+}

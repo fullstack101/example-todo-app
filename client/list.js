@@ -1,6 +1,13 @@
-import createItem from './item';
+import ToDo from './item';
 
-export default element => items =>
-     element.innerHTML = `<table class="todo-list">
-        ${items.map(item => createItem(item)).join('')}
-    </table>`;
+import preact from 'preact';
+const { h, render, Component } = preact;
+
+export default class extends Component {
+    render() {
+        return <table class="todo-list">
+        {this.props.items.map(
+            ({ text, removeUrl }) => <ToDo text={text} delete={this.props.delete(removeUrl)} />)}
+    </table>;
+    }
+}

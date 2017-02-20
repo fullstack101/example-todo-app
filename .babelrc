@@ -1,1 +1,16 @@
- { "presets": [ [ "es2015", { "modules": false } ] ], "plugins": ["external-helpers"] }
+{
+    "sourceMaps": true,
+    "presets": [
+        [
+            "es2015",
+            {
+                "loose": true,
+                "modules": false
+            }
+        ]
+    ],
+    "plugins": [
+        "external-helpers",
+        ["transform-react-jsx", { "pragma": "h" }]
+    ]
+}

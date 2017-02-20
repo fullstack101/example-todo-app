@@ -1,7 +1,18 @@
-const createFlash = element => message => {
-    element.innerHTML = `<div style="background-color: bisque">${message}</div>`;
-    element.style.display = "block";
-    setTimeout(() => { element.style.display = "none"; }, 2000);
-};
+import preact from 'preact';
+const { h, render, Component } = preact;
 
-module.exports = createFlash;
+export default class extends Component {
+    render() {
+        if (!this.state.cooldown) {
+            this.state.visible = true;
+        }
+        this.state.cooldown = false;
+
+        if (this.state.visible) {
+            setTimeout(() => { this.setState({ visible: false, cooldown: true }); }, 2000);
+            return <div style="background-color: bisque;">{this.props.message}</div>;
+        }
+
+        return <div></div>;
+    }
+};

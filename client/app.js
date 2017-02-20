@@ -1,7 +1,10 @@
 import todoService from './service';
-import createList from './list';
-import createFlash from './flash';
-import renderForm from './form';
+import List from './list';
+import Flash from './flash';
+import Form from './form';
+
+import preact from 'preact';
+const { h, render, Component } = preact;
 
 const backOffRetry = callback => {
     let backOff = 100;
@@ -11,25 +14,44 @@ const backOffRetry = callback => {
     };
 };
 
-const renderList = createList(document.querySelector('#todo-list'));
+class ToDoApp extends Component {
+    constructor() {
+        super();
+        this.add = this.add.bind(this);
+        this.remove = this.remove.bind(this);
+        this.mainLoop = this.mainLoop.bind(this);
+    }
 
-const flash = createFlash(document.querySelector('#flash'));
+    mainLoop() {
+        todoService.pollChanges()
+        .then(items => this.setState({ items }))
+        .then(this.mainLoop)
+        .catch(backOffRetry(this.mainLoop));
+    }
 
-const list = () => todoService.list().then(renderList);
+    add(text) {
+         todoService.add({ text })
+            .then(() => this.setState({ flash: "added" }));
+    }
 
-const add = text => todoService.add({ text })
-                            .then(flash('added successfully!'));
+    remove(removeUrl) {
+        return () => todoService.remove(removeUrl)
+            .then(() => this.setState({ flash: "removed"}));
+    }
 
-const remove = removeUrl => todoService.remove(removeUrl)
-                            .then(flash('removed successfully!'));
+    componentWillMount() {
+        todoService.list()
+            .then(items => this.setState({ items }));
+        this.mainLoop();
+    }
 
-const mainLoop = () => todoService.pollChanges()
-                            .then(renderList)
-                            .then(mainLoop)
-                            .catch(backOffRetry(mainLoop));
+    render() {
+        return <div>
+            <Flash message={this.state.flash} />
+            <Form add={this.add} />
+            <List items={this.state.items || []} delete={this.remove} />
+        </div>;
+    }
+}
 
-window.actions = { add, remove };
-
-list();
-renderForm(document.querySelector('#todo-form'));
-mainLoop();
+preact.render(<ToDoApp />, document.querySelector('#todo-app'));
