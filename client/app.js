@@ -31,23 +31,23 @@ class ToDoApp extends Component {
 
     add(text) {
          todoService.add({ text })
-            .then(() => this.setState({ flash: "added" }));
+            .then(() => this.flash("added"));
     }
 
     remove(removeUrl) {
         return () => todoService.remove(removeUrl)
-            .then(() => this.setState({ flash: "removed"}));
+            .then(() => this.flash("removed"));
     }
 
     componentWillMount() {
+        this.mainLoop();
         todoService.list()
             .then(items => this.setState({ items }));
-        this.mainLoop();
     }
 
     render() {
         return <div>
-            <Flash message={this.state.flash} />
+            <Flash ref={({ flash }) => { this.flash = flash; }} />
             <Form add={this.add} />
             <List items={this.state.items || []} delete={this.remove} />
         </div>;
