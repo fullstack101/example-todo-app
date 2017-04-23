@@ -1,12 +1,11 @@
 import preact from 'preact';
-const { h, render, Component } = preact;
+const { h, Component } = preact;
 
 export default class extends Component {
     constructor(){
         super();
         this.flash = this.flash.bind(this);
     }
-
 
     flash(message) {
         this.setState({ message });

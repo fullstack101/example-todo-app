@@ -1,4 +1,6 @@
 {
+  "parser": "babel-eslint",
+  "plugins": ["jsx"],
   "env": {
     "es6": true,
     "browser": true,
@@ -17,6 +19,10 @@
     "no-alert": "error",
     "no-unused-vars": "warn",
     "no-undef": "error",
-    "comma-dangle": "error"
+    "comma-dangle": "error",
+    "jsx/uses-factory": [1, {"pragma": "h"}],
+    "jsx/factory-in-scope": [1, {"pragma": "h"}],
+    "jsx/mark-used-vars": 1,
+    "jsx/no-undef": 1
   }
 }

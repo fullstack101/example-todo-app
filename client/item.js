@@ -1,7 +1,7 @@
 import escape from 'escape-html';
 
 import preact from 'preact';
-const { h, render, Component } = preact;
+const { h, Component } = preact;
 
 export default class extends Component {
     render() {

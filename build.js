@@ -1,3 +1,5 @@
+/* eslint-disable no-console */
+
 const rollup = require('rollup');
 const babel  = require('rollup-plugin-babel');
 const nodeResolve  = require('rollup-plugin-node-resolve');

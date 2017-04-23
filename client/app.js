@@ -8,7 +8,7 @@ const { h, render, Component } = preact;
 
 const backOffRetry = callback => {
     let backOff = 100;
-    return error => {
+    return () => {
         backOff = backOff * 2;
         setTimeout(callback, backOff);
     };
@@ -54,4 +54,4 @@ class ToDoApp extends Component {
     }
 }
 
-preact.render(<ToDoApp />, document.querySelector('#todo-app'));
+render(<ToDoApp />, document.querySelector('#todo-app'));

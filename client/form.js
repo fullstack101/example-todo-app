@@ -1,5 +1,5 @@
 import preact from 'preact';
-const { h, render, Component } = preact;
+const { h, Component } = preact;
 
 export default class extends Component {
     constructor() {
@@ -15,12 +15,12 @@ export default class extends Component {
     }
 
     change(e) {
-        this.setState({ text: e.target.value })
+        this.setState({ text: e.target.value });
     }
 
     render() {
         return <div class="todo-form">
-            <input ref={input => {this.inputField = input}} value={this.state.text} onInput={this.change} />
+            <input ref={input => {this.inputField = input;}} value={this.state.text} onInput={this.change} />
             <button onClick={this.submit}>Add To-Do</button></div>;
     }
 };
